@@ -7,7 +7,7 @@ from pathlib import Path
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "vanta-local-secret")
 DB_PATH = Path(__file__).with_name("vanta.db")
-ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "vanta123")
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "vanta123").strip()
 
 
 def get_connection():
@@ -138,7 +138,7 @@ def admin_login():
     error = ""
 
     if request.method == "POST":
-        password = request.form.get("password", "")
+        password = request.form.get("password", "").strip()
 
         if password == ADMIN_PASSWORD:
             session["admin_logged_in"] = True
