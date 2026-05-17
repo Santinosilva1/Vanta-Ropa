@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VANTA - Admin</title>
+  <style>
+    * { box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { margin: 0; background: #050505; color: white; }
+    header { padding: 22px 50px; border-bottom: 1px solid #222; display: flex; justify-content: space-between; align-items: center; }
+    a { color: white; text-decoration: none; border: 1px solid white; padding: 10px 14px; }
+    main { padding: 50px; }
+    .order { border: 1px solid #222; background: #0d0d0d; border-radius: 8px; padding: 22px; margin-bottom: 18px; }
+    .muted { color: #999; }
+    ul { line-height: 1.8; }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>VANTA ADMIN</h2>
+    <a href="/">Volver a la tienda</a>
+  </header>
+
+  <main>
+    <h1>Pedidos recibidos</h1>
+    <div id="orders"></div>
+  </main>
+
+  <script>
+    function formatPrice(price) {
+      return price.toLocaleString("es-AR");
+    }
+
+    async function loadOrders() {
+      const response = await fetch("/api/orders");
+      const orders = await response.json();
+      const container = document.getElementById("orders");
+
+      if (orders.length === 0) {
+        container.innerHTML = "<p class='muted'>Todavia no hay pedidos.</p>";
+        return;
+      }
+
+      container.innerHTML = orders.map(order => `
+        <div class="order">
+          <h3>Pedido #${order.id} - $${formatPrice(order.total)}</h3>
+          <p class="muted">${order.created_at}</p>
+          <p><strong>Cliente:</strong> ${order.customer_name}</p>
+          <p><strong>Telefono:</strong> ${order.customer_phone}</p>
+          <p><strong>Email:</strong> ${order.customer_email || "Sin email"}</p>
+          <ul>
+            ${order.items.map(item => `
+              <li>${item.product_name} | Talle: ${item.size} | Cantidad: ${item.quantity} | $${formatPrice(item.price * item.quantity)}</li>
+            `).join("")}
+          </ul>
+        </div>
+      `).join("");
+    }
+
+    loadOrders();
+  </script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VANTA - Built Different</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { background: #050505; color: white; }
+    header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; border-bottom: 1px solid #222; position: sticky; top: 0; background: rgba(0,0,0,0.95); z-index: 100; }
+    nav { display: flex; align-items: center; gap: 25px; flex-wrap: wrap; }
+    nav a { color: white; text-decoration: none; font-size: 14px; letter-spacing: 2px; transition: 0.3s; }
+    nav a:hover { color: #c0c0c0; }
+    section { padding: 80px 50px; }
+    .hero { height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(to bottom, #000, #111); }
+    .hero h1 { font-size: 90px; letter-spacing: 15px; }
+    .hero p { font-size: 20px; color: #bdbdbd; letter-spacing: 4px; margin: 20px 0; }
+    .btn, .cart-icon, .cart-btn, .small-btn { border: 1px solid white; background: transparent; color: white; cursor: pointer; transition: 0.3s; }
+    .btn { padding: 15px 35px; letter-spacing: 3px; text-decoration: none; }
+    .cart-icon { padding: 10px 14px; letter-spacing: 1px; }
+    .btn:hover, .cart-icon:hover, .cart-btn:hover, .small-btn:hover { background: white; color: black; }
+    .dashboard, .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+    .card, .product-card { background: #0d0d0d; border: 1px solid #222; border-radius: 8px; }
+    .card { padding: 25px; }
+    .product-card { overflow: hidden; transition: 0.3s; }
+    .product-card:hover { transform: translateY(-8px); border-color: #555; }
+    .product-card img { width: 100%; height: 300px; object-fit: cover; background: #111; }
+    .product-info { padding: 20px; }
+    .product-info h3 { margin-bottom: 10px; }
+    .product-info p { color: #aaa; line-height: 1.5; }
+    .price { font-size: 20px; color: #c0c0c0; margin: 10px 0; }
+    .sizes { margin: 10px 0; color: #999; }
+    select, input { width: 100%; padding: 11px; margin-top: 10px; background: #050505; color: white; border: 1px solid #333; }
+    .cart-btn { width: 100%; padding: 12px; margin-top: 10px; }
+    .cart-panel { position: fixed; top: 0; right: -430px; width: 400px; max-width: 100%; height: 100vh; background: #090909; border-left: 1px solid #333; z-index: 200; padding: 25px; transition: 0.4s; overflow-y: auto; }
+    .cart-panel.active { right: 0; }
+    .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+    .cart-item { border-bottom: 1px solid #222; padding: 15px 0; }
+    .cart-item p { color: #aaa; font-size: 14px; margin: 4px 0; }
+    .cart-actions { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+    .small-btn { padding: 7px 10px; }
+    .cart-total { margin-top: 25px; font-size: 22px; color: #ddd; }
+    .checkout-box { margin-top: 24px; border-top: 1px solid #222; padding-top: 20px; }
+    .checkout-btn { width: 100%; margin-top: 15px; padding: 14px; background: white; color: black; border: none; cursor: pointer; letter-spacing: 2px; font-weight: bold; }
+    .notification { position: fixed; bottom: 25px; right: 25px; background: white; color: black; padding: 18px 22px; border-radius: 8px; max-width: 360px; z-index: 300; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+    .notification.active { display: block; }
+    footer { text-align: center; padding: 30px; border-top: 1px solid #222; color: #777; }
+    @media (max-width: 700px) {
+      header { padding: 18px 20px; flex-direction: column; gap: 15px; }
+      section { padding: 60px 20px; }
+      .hero h1 { font-size: 52px; letter-spacing: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h2>VANTA</h2>
+  <nav>
+    <a href="#home">HOME</a>
+    <a href="#drop">DROP 001</a>
+    <a href="#about">ABOUT</a>
+    <a href="#shop">SHOP</a>
+    <button class="cart-icon" onclick="toggleCart()">CARRITO (<span id="cart-count">0</span>)</button>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <h1>VANTA</h1>
+  <p>BUILT DIFFERENT.</p>
+  <a href="#shop" class="btn">SHOP NOW</a>
+</section>
+
+<section id="drop">
+  <h2 style="margin-bottom:30px;">DROP 001</h2>
+  <div class="dashboard">
+    <div class="card">
+      <h3>DROP 001</h3>
+      <p>Primera coleccion premium inspirada en presencia, silencio y estetica superior.</p>
+    </div>
+    <div class="card">
+      <h3>BRAND DNA</h3>
+      <p>No need to explain. Minimalismo, lujo oscuro y mentalidad elevada.</p>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <h2 style="margin-bottom:20px;">ABOUT VANTA</h2>
+  <p style="color:#999; max-width:700px; line-height:1.8;">
+    VANTA nace como una marca premium enfocada en diseño minimalista, identidad fuerte y prendas exclusivas.
+  </p>
+</section>
+
+<section id="shop">
+  <h2 style="margin-bottom:30px;">SHOP COLLECTION</h2>
+  <div class="products">
+    <div class="product-card">
+      <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518" alt="Remera Negra">
+      <div class="product-info">
+        <h3>VANTA Essential Tee</h3>
+        <p>Remera oversized premium algodon 280gsm.</p>
+        <div class="price">$39.999</div>
+        <div class="sizes">Talles disponibles</div>
+        <select id="size-tee"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+        <button class="cart-btn" onclick="addToCart('VANTA Essential Tee', 39999, document.getElementById('size-tee').value)">Anadir al carrito</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c" alt="Buzo">
+      <div class="product-info">
+        <h3>VANTA Heavy Hoodie</h3>
+        <p>Buzo premium heavyweight edicion limitada.</p>
+        <div class="price">$74.999</div>
+        <div class="sizes">Talles disponibles</div>
+        <select id="size-hoodie"><option>M</option><option>L</option><option>XL</option></select>
+        <button class="cart-btn" onclick="addToCart('VANTA Heavy Hoodie', 74999, document.getElementById('size-hoodie').value)">Anadir al carrito</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <img src="https://images.unsplash.com/photo-1523398002811-999ca8dec234" alt="Gorra">
+      <div class="product-info">
+        <h3>VANTA Signature Cap</h3>
+        <p>Gorra negra con bordado frontal metalico.</p>
+        <div class="price">$24.999</div>
+        <div class="sizes">Talle unico</div>
+        <select id="size-cap"><option>Unico</option></select>
+        <button class="cart-btn" onclick="addToCart('VANTA Signature Cap', 24999, document.getElementById('size-cap').value)">Anadir al carrito</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cart-panel" id="cart-panel">
+  <div class="cart-header">
+    <h2>Tu carrito</h2>
+    <button class="small-btn" onclick="toggleCart()">X</button>
+  </div>
+
+  <div id="cart-items"></div>
+  <div class="cart-total">Total: $<span id="cart-total">0</span></div>
+
+  <div class="checkout-box">
+    <h3>Datos del comprador</h3>
+    <input id="customer-name" placeholder="Nombre" />
+    <input id="customer-phone" placeholder="Telefono" />
+    <input id="customer-email" placeholder="Email opcional" />
+    <button class="checkout-btn" onclick="checkout()">FINALIZAR COMPRA</button>
+  </div>
+</div>
+
+<div class="notification" id="notification"></div>
+
+<footer>
+  © 2026 VANTA - Presence Speaks.
+</footer>
+
+<script>
+  let cart = [];
+
+  function formatPrice(price) {
+    return price.toLocaleString("es-AR");
+  }
+
+  function toggleCart() {
+    document.getElementById("cart-panel").classList.toggle("active");
+  }
+
+  function addToCart(name, price, size) {
+    const existingProduct = cart.find(item => item.name === name && item.size === size);
+
+    if (existingProduct) {
+      existingProduct.quantity++;
+    } else {
+      cart.push({ name, price, size, quantity: 1 });
+    }
+
+    updateCart();
+    showNotification(name + " talle " + size + " fue anadido al carrito.");
+  }
+
+  function updateCart() {
+    const cartItems = document.getElementById("cart-items");
+    const cartCount = document.getElementById("cart-count");
+    const cartTotal = document.getElementById("cart-total");
+
+    cartItems.innerHTML = "";
+    let total = 0;
+    let count = 0;
+
+    cart.forEach((item, index) => {
+      total += item.price * item.quantity;
+      count += item.quantity;
+
+      cartItems.innerHTML += `
+        <div class="cart-item">
+          <h4>${item.name}</h4>
+          <p>Talle: ${item.size}</p>
+          <p>Precio: $${formatPrice(item.price)}</p>
+          <p>Cantidad: ${item.quantity}</p>
+          <div class="cart-actions">
+            <button class="small-btn" onclick="decreaseQuantity(${index})">-</button>
+            <button class="small-btn" onclick="increaseQuantity(${index})">+</button>
+            <button class="small-btn" onclick="removeItem(${index})">Eliminar</button>
+          </div>
+        </div>
+      `;
+    });
+
+    cartCount.textContent = count;
+    cartTotal.textContent = formatPrice(total);
+  }
+
+  function increaseQuantity(index) {
+    cart[index].quantity++;
+    updateCart();
+  }
+
+  function decreaseQuantity(index) {
+    if (cart[index].quantity > 1) {
+      cart[index].quantity--;
+    } else {
+      cart.splice(index, 1);
+    }
+
+    updateCart();
+  }
+
+  function removeItem(index) {
+    cart.splice(index, 1);
+    updateCart();
+  }
+
+  async function checkout() {
+    const name = document.getElementById("customer-name").value.trim();
+    const phone = document.getElementById("customer-phone").value.trim();
+    const email = document.getElementById("customer-email").value.trim();
+
+    if (cart.length === 0) {
+      showNotification("Tu carrito esta vacio.");
+      return;
+    }
+
+    if (!name || !phone) {
+      showNotification("Completa nombre y telefono para finalizar la compra.");
+      return;
+    }
+
+    const response = await fetch("/api/orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        customer: { name, phone, email },
+        items: cart
+      })
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      showNotification(result.error || "No se pudo guardar el pedido.");
+      return;
+    }
+
+    showNotification("Pedido #" + result.order_id + " guardado por $" + formatPrice(result.total) + ".");
+    cart = [];
+    updateCart();
+    toggleCart();
+  }
+
+  function showNotification(message) {
+    const notification = document.getElementById("notification");
+    notification.textContent = message;
+    notification.classList.add("active");
+
+    setTimeout(() => {
+      notification.classList.remove("active");
+    }, 3500);
+  }
+</script>
+
+</body>
+</html>
