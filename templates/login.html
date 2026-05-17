@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VANTA - Admin Login</title>
+  <style>
+    * { box-sizing: border-box; font-family: Arial, sans-serif; }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      background: #050505;
+      color: white;
+    }
+    form {
+      width: min(420px, calc(100% - 40px));
+      border: 1px solid #222;
+      background: #0d0d0d;
+      padding: 28px;
+      border-radius: 8px;
+    }
+    h1 { margin-top: 0; letter-spacing: 4px; }
+    input {
+      width: 100%;
+      margin-top: 18px;
+      padding: 13px;
+      background: #050505;
+      border: 1px solid #333;
+      color: white;
+    }
+    button {
+      width: 100%;
+      margin-top: 16px;
+      padding: 13px;
+      background: white;
+      color: black;
+      border: 0;
+      cursor: pointer;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+    .error { margin-top: 14px; color: #ff6b6b; }
+    a {
+      display: inline-block;
+      margin-top: 18px;
+      color: #aaa;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <form method="post">
+    <h1>VANTA ADMIN</h1>
+    <input type="password" name="password" placeholder="Contrasena" autofocus />
+    <button type="submit">ENTRAR</button>
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+    <a href="/">Volver a la tienda</a>
+  </form>
+</body>
+</html>

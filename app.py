@@ -1,11 +1,13 @@
 import os
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, redirect, render_template, request, session, url_for
 import sqlite3
 from pathlib import Path
 
 
 app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY", "vanta-local-secret")
 DB_PATH = Path(__file__).with_name("vanta.db")
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "vanta123")
 
 
 def get_connection():
@@ -125,7 +127,32 @@ def list_orders():
 
 @app.route("/admin")
 def admin():
+    if not session.get("admin_logged_in"):
+        return redirect(url_for("admin_login"))
+
     return render_template("admin.html")
+
+
+@app.route("/admin/login", methods=["GET", "POST"])
+def admin_login():
+    error = ""
+
+    if request.method == "POST":
+        password = request.form.get("password", "")
+
+        if password == ADMIN_PASSWORD:
+            session["admin_logged_in"] = True
+            return redirect(url_for("admin"))
+
+        error = "Contrasena incorrecta"
+
+    return render_template("login.html", error=error)
+
+
+@app.route("/admin/logout")
+def admin_logout():
+    session.clear()
+    return redirect(url_for("home"))
 
 
 init_db()
