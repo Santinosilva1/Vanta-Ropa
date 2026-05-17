@@ -6,25 +6,27 @@
   <title>VANTA - Built Different</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-    body { background: #050505; color: white; }
-    header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; border-bottom: 1px solid #222; position: sticky; top: 0; background: rgba(0,0,0,0.95); z-index: 100; }
-    nav { display: flex; align-items: center; gap: 25px; flex-wrap: wrap; }
+    html { scroll-behavior: smooth; }
+    body { background: #050505; color: white; overflow-x: hidden; }
+    header { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 20px clamp(18px, 4vw, 50px); border-bottom: 1px solid #222; position: sticky; top: 0; background: rgba(0,0,0,0.95); z-index: 100; }
+    header h2 { flex: 0 0 auto; letter-spacing: 1px; }
+    nav { display: flex; align-items: center; justify-content: flex-end; gap: clamp(12px, 2vw, 25px); flex-wrap: wrap; }
     nav a { color: white; text-decoration: none; font-size: 14px; letter-spacing: 2px; transition: 0.3s; }
     nav a:hover { color: #c0c0c0; }
-    section { padding: 80px 50px; }
-    .hero { height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(to bottom, #000, #111); }
-    .hero h1 { font-size: 90px; letter-spacing: 15px; }
-    .hero p { font-size: 20px; color: #bdbdbd; letter-spacing: 4px; margin: 20px 0; }
+    section { padding: 80px clamp(18px, 4vw, 50px); }
+    .hero { min-height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(to bottom, #000, #111); }
+    .hero h1 { font-size: clamp(48px, 10vw, 90px); letter-spacing: clamp(6px, 1.7vw, 15px); line-height: 1; }
+    .hero p { font-size: clamp(14px, 2.5vw, 20px); color: #bdbdbd; letter-spacing: clamp(2px, 0.8vw, 4px); margin: 20px 0; }
     .btn, .cart-icon, .cart-btn, .small-btn { border: 1px solid white; background: transparent; color: white; cursor: pointer; transition: 0.3s; }
     .btn { padding: 15px 35px; letter-spacing: 3px; text-decoration: none; }
     .cart-icon { padding: 10px 14px; letter-spacing: 1px; }
     .btn:hover, .cart-icon:hover, .cart-btn:hover, .small-btn:hover { background: white; color: black; }
-    .dashboard, .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+    .dashboard, .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 25px; }
     .card, .product-card { background: #0d0d0d; border: 1px solid #222; border-radius: 8px; }
     .card { padding: 25px; }
     .product-card { overflow: hidden; transition: 0.3s; }
     .product-card:hover { transform: translateY(-8px); border-color: #555; }
-    .product-card img { width: 100%; height: 300px; object-fit: cover; background: #111; }
+    .product-card img { width: 100%; height: clamp(240px, 35vw, 300px); object-fit: cover; background: #111; }
     .product-info { padding: 20px; }
     .product-info h3 { margin-bottom: 10px; }
     .product-info p { color: #aaa; line-height: 1.5; }
@@ -42,13 +44,28 @@
     .cart-total { margin-top: 25px; font-size: 22px; color: #ddd; }
     .checkout-box { margin-top: 24px; border-top: 1px solid #222; padding-top: 20px; }
     .checkout-btn { width: 100%; margin-top: 15px; padding: 14px; background: white; color: black; border: none; cursor: pointer; letter-spacing: 2px; font-weight: bold; }
-    .notification { position: fixed; bottom: 25px; right: 25px; background: white; color: black; padding: 18px 22px; border-radius: 8px; max-width: 360px; z-index: 300; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+    .notification { position: fixed; bottom: 25px; right: 25px; background: white; color: black; padding: 18px 22px; border-radius: 8px; max-width: min(360px, calc(100vw - 36px)); z-index: 300; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
     .notification.active { display: block; }
     footer { text-align: center; padding: 30px; border-top: 1px solid #222; color: #777; }
-    @media (max-width: 700px) {
-      header { padding: 18px 20px; flex-direction: column; gap: 15px; }
-      section { padding: 60px 20px; }
-      .hero h1 { font-size: 52px; letter-spacing: 8px; }
+    @media (max-width: 820px) {
+      header { align-items: flex-start; flex-direction: column; padding: 16px 18px; }
+      nav { width: 100%; justify-content: flex-start; gap: 10px; }
+      nav a { font-size: 12px; letter-spacing: 1.5px; }
+      .cart-icon { margin-left: auto; }
+      .hero { min-height: calc(100vh - 150px); padding-top: 40px; padding-bottom: 40px; }
+      section { padding-top: 58px; padding-bottom: 58px; }
+    }
+
+    @media (max-width: 520px) {
+      header { position: static; }
+      nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      nav a, .cart-icon { width: 100%; text-align: center; }
+      .cart-icon { grid-column: 1 / -1; margin-left: 0; }
+      .btn { width: min(100%, 240px); text-align: center; padding: 14px 22px; }
+      .cart-panel { right: -100%; width: 100%; padding: 20px; }
+      .cart-actions { flex-wrap: wrap; }
+      .small-btn { min-width: 44px; min-height: 40px; }
+      .notification { left: 18px; right: 18px; bottom: 18px; }
     }
   </style>
 </head>

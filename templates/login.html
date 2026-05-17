@@ -9,13 +9,14 @@
     body {
       min-height: 100vh;
       margin: 0;
+      padding: 20px;
       display: grid;
       place-items: center;
       background: #050505;
       color: white;
     }
     form {
-      width: min(420px, calc(100% - 40px));
+      width: min(420px, 100%);
       border: 1px solid #222;
       background: #0d0d0d;
       padding: 28px;
@@ -47,6 +48,10 @@
       margin-top: 18px;
       color: #aaa;
       text-decoration: none;
+    }
+    @media (max-width: 420px) {
+      form { padding: 22px; }
+      h1 { font-size: 24px; letter-spacing: 2px; }
     }
   </style>
 </head>
