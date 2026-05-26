@@ -144,6 +144,42 @@
       min-height: min(760px, calc(100vh - 56px));
     }
 
+    .enter-button::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: min(680px, 92vw);
+      height: min(520px, 56vh);
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background:
+        radial-gradient(ellipse at 50% 42%, rgba(255, 245, 235, 0.22), rgba(255, 245, 235, 0.08) 22%, transparent 47%),
+        radial-gradient(ellipse at 42% 64%, rgba(190, 72, 58, 0.28), rgba(190, 72, 58, 0.1) 28%, transparent 58%),
+        radial-gradient(ellipse at 58% 64%, rgba(178, 150, 210, 0.16), transparent 54%);
+      filter: blur(26px);
+      opacity: 0.95;
+      mix-blend-mode: screen;
+    }
+
+    .enter-button::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: min(520px, 78vw);
+      height: min(230px, 30vh);
+      top: 63%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-7deg);
+      border-radius: 50%;
+      background:
+        radial-gradient(ellipse at center, rgba(255, 220, 210, 0.3), rgba(182, 62, 48, 0.13) 34%, transparent 68%);
+      filter: blur(22px);
+      opacity: 0.8;
+      mix-blend-mode: screen;
+    }
+
     .enter-logo {
       width: min(660px, 92vw);
       max-height: 66vh;
@@ -1000,6 +1036,25 @@
         width: 100%;
         min-height: calc(100svh - 36px);
         gap: clamp(24px, 6vh, 54px);
+      }
+
+      .enter-button::before {
+        width: 108vw;
+        height: 58svh;
+        top: 43%;
+        background:
+          radial-gradient(ellipse at 50% 38%, rgba(255, 245, 235, 0.26), rgba(255, 245, 235, 0.09) 24%, transparent 49%),
+          radial-gradient(ellipse at 39% 64%, rgba(197, 67, 54, 0.34), rgba(197, 67, 54, 0.12) 30%, transparent 60%),
+          radial-gradient(ellipse at 62% 62%, rgba(168, 132, 204, 0.2), transparent 56%);
+        filter: blur(30px);
+      }
+
+      .enter-button::after {
+        width: 92vw;
+        height: 28svh;
+        top: 65%;
+        filter: blur(24px);
+        opacity: 0.86;
       }
 
       .enter-logo {
