@@ -741,10 +741,10 @@
     }
 
     .detail-modal {
-      width: min(940px, 100%);
-      max-height: min(760px, calc(100vh - 40px));
+      width: min(980px, 100%);
+      max-height: min(820px, calc(100vh - 40px));
       display: grid;
-      grid-template-columns: minmax(0, 0.9fr) minmax(300px, 1fr);
+      grid-template-columns: minmax(0, 0.88fr) minmax(320px, 1fr);
       overflow: hidden;
       border: 1px solid var(--line);
       background: #080808;
@@ -768,6 +768,14 @@
       overflow-y: auto;
     }
 
+    .detail-breadcrumb {
+      margin-bottom: 16px;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
     .detail-top {
       display: flex;
       justify-content: space-between;
@@ -785,13 +793,90 @@
     .detail-price {
       margin: 12px 0 18px;
       color: var(--warm);
-      font-size: 24px;
+      font-size: clamp(28px, 4vw, 38px);
       font-weight: 900;
+    }
+
+    .detail-benefits {
+      display: grid;
+      gap: 10px;
+      margin: 18px 0 24px;
+    }
+
+    .detail-benefit {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: #d4cec5;
+      line-height: 1.45;
+    }
+
+    .detail-benefit strong {
+      color: var(--warm);
+    }
+
+    .detail-benefit span:first-child {
+      width: 28px;
+      height: 24px;
+      display: inline-grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border: 1px solid rgba(215, 196, 162, 0.4);
+      color: var(--warm);
+      font-size: 13px;
     }
 
     .detail-content p {
       color: #d4cec5;
       line-height: 1.75;
+    }
+
+    .detail-form {
+      display: grid;
+      gap: 16px;
+      margin: 22px 0;
+    }
+
+    .detail-field label,
+    .quantity-label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+    }
+
+    .detail-field select {
+      min-height: 54px;
+      border-radius: 0;
+      font-size: 16px;
+    }
+
+    .quantity-control {
+      min-height: 54px;
+      display: grid;
+      grid-template-columns: 54px 1fr 54px;
+      align-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: #070707;
+    }
+
+    .quantity-control button {
+      height: 100%;
+      border: 0;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--warm);
+      cursor: pointer;
+      font-size: 25px;
+      line-height: 1;
+    }
+
+    .quantity-control span {
+      text-align: center;
+      font-size: 19px;
+      font-weight: 900;
     }
 
     .detail-list {
@@ -813,6 +898,10 @@
     .detail-actions {
       display: grid;
       gap: 10px;
+    }
+
+    .detail-actions + p {
+      margin-top: 22px;
     }
 
     .cart-panel {
@@ -1142,8 +1231,8 @@
       }
 
       .detail-image {
-        min-height: 250px;
-        max-height: 38svh;
+        min-height: 205px;
+        max-height: 30svh;
       }
 
       .detail-content {
@@ -1151,7 +1240,20 @@
       }
 
       .detail-top h3 {
-        font-size: clamp(25px, 9vw, 36px);
+        font-size: clamp(24px, 8vw, 34px);
+      }
+
+      .detail-price {
+        font-size: 30px;
+        margin-bottom: 14px;
+      }
+
+      .detail-benefits {
+        margin: 14px 0 16px;
+      }
+
+      .detail-form {
+        gap: 14px;
       }
 
       .btn,
@@ -1450,6 +1552,7 @@
         <img id="detail-image" src="" alt="" />
       </div>
       <div class="detail-content">
+        <div class="detail-breadcrumb">Inicio &gt; Drop 001 &gt; <span id="detail-breadcrumb-product"></span></div>
         <div class="detail-top">
           <div>
             <p class="kicker" id="detail-kicker"></p>
@@ -1458,12 +1561,30 @@
           <button class="small-btn" type="button" onclick="closeProductDetail()" aria-label="Cerrar detalle">X</button>
         </div>
         <div class="detail-price" id="detail-price"></div>
-        <p id="detail-description"></p>
-        <ul class="detail-list" id="detail-list"></ul>
+        <div class="detail-benefits">
+          <div class="detail-benefit"><span>3</span><p><strong>3 cuotas sin interes</strong> disponibles al confirmar el pedido.</p></div>
+          <div class="detail-benefit"><span>%</span><p><strong>15% de descuento</strong> pagando por transferencia o deposito.</p></div>
+        </div>
+        <div class="detail-form">
+          <div class="detail-field">
+            <label for="detail-size">Talle</label>
+            <select id="detail-size"></select>
+          </div>
+          <div>
+            <span class="quantity-label">Cantidad</span>
+            <div class="quantity-control">
+              <button type="button" onclick="changeDetailQuantity(-1)" aria-label="Restar cantidad">-</button>
+              <span id="detail-quantity">1</span>
+              <button type="button" onclick="changeDetailQuantity(1)" aria-label="Sumar cantidad">+</button>
+            </div>
+          </div>
+        </div>
         <div class="detail-actions">
           <button class="checkout-btn" type="button" id="detail-add-btn">Agregar al carrito</button>
           <button class="cart-btn" type="button" onclick="closeProductDetail()">Seguir viendo</button>
         </div>
+        <p id="detail-description"></p>
+        <ul class="detail-list" id="detail-list"></ul>
       </div>
     </article>
   </div>
@@ -1501,12 +1622,14 @@
   <script>
     let cart = [];
     let selectedProductKey = "";
+    let detailQuantity = 1;
 
     const productsData = {
       tee: {
         name: "VANTA Essential Tee",
         price: 39999,
         sizeSelectId: "size-tee",
+        sizes: ["S", "M", "L", "XL"],
         kicker: "Oversized - 280gsm",
         image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1100&q=90",
         description: "Remera de calce oversized con algodon pesado, pensada para caer firme sobre el cuerpo sin perder comodidad. Es la pieza base del drop: limpia, oscura y facil de combinar.",
@@ -1520,6 +1643,7 @@
         name: "VANTA Heavy Hoodie",
         price: 74999,
         sizeSelectId: "size-hoodie",
+        sizes: ["M", "L", "XL"],
         kicker: "Heavyweight - limitado",
         image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1100&q=90",
         description: "Buzo pesado con presencia fuerte, capucha estructurada y fit amplio. Esta pensado para sentirse abrigado, premium y con una silueta limpia.",
@@ -1533,6 +1657,7 @@
         name: "VANTA Signature Cap",
         price: 24999,
         sizeSelectId: "size-cap",
+        sizes: ["Unico"],
         kicker: "Signature - talle unico",
         image: "https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=1100&q=90",
         description: "Gorra negra signature con bordado frontal y ajuste regulable. Un accesorio simple, oscuro y directo para cerrar el outfit VANTA.",
@@ -1557,13 +1682,13 @@
       backdrop.classList.toggle("active", shouldOpen);
     }
 
-    function addToCart(name, price, size) {
+    function addToCart(name, price, size, quantity = 1) {
       const existingProduct = cart.find(item => item.name === name && item.size === size);
 
       if (existingProduct) {
-        existingProduct.quantity++;
+        existingProduct.quantity += quantity;
       } else {
-        cart.push({ name, price, size, quantity: 1 });
+        cart.push({ name, price, size, quantity });
       }
 
       updateCart();
@@ -1639,14 +1764,20 @@
       if (!product) return;
 
       selectedProductKey = productKey;
+      detailQuantity = 1;
       document.getElementById("detail-image").src = product.image;
       document.getElementById("detail-image").alt = product.name;
+      document.getElementById("detail-breadcrumb-product").textContent = product.name;
       document.getElementById("detail-kicker").textContent = product.kicker;
       document.getElementById("detail-title").textContent = product.name;
       document.getElementById("detail-price").textContent = "$" + formatPrice(product.price);
       document.getElementById("detail-description").textContent = product.description;
       document.getElementById("detail-list").innerHTML = product.details.map(detail => `<li>${detail}</li>`).join("");
+      document.getElementById("detail-size").innerHTML = product.sizes.map(size => `<option>${size}</option>`).join("");
+      document.getElementById("detail-size").value = document.getElementById(product.sizeSelectId).value;
+      document.getElementById("detail-quantity").textContent = detailQuantity;
       document.getElementById("detail-backdrop").classList.add("active");
+      document.querySelector(".detail-content").scrollTop = 0;
       document.body.classList.add("is-locked");
     }
 
@@ -1659,13 +1790,19 @@
       document.body.classList.remove("is-locked");
     }
 
+    function changeDetailQuantity(amount) {
+      detailQuantity = Math.max(1, Math.min(10, detailQuantity + amount));
+      document.getElementById("detail-quantity").textContent = detailQuantity;
+    }
+
     function addSelectedProductFromDetail() {
       const product = productsData[selectedProductKey];
       if (!product) return;
 
-      const size = document.getElementById(product.sizeSelectId).value;
+      const size = document.getElementById("detail-size").value;
+      document.getElementById(product.sizeSelectId).value = size;
       closeProductDetail();
-      addToCart(product.name, product.price, size);
+      addToCart(product.name, product.price, size, detailQuantity);
     }
 
     async function checkout() {
