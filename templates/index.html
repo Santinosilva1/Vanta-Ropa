@@ -73,6 +73,65 @@
       font: inherit;
     }
 
+    body.is-locked {
+      overflow: hidden;
+    }
+
+    .enter-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      background: #000;
+      transition: opacity 0.7s ease, visibility 0.7s ease;
+    }
+
+    .enter-screen.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .enter-screen.is-hidden .enter-button {
+      outline: 0;
+    }
+
+    .enter-button {
+      width: min(560px, 86vw);
+      border: 0;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      gap: 26px;
+      text-align: center;
+    }
+
+    .enter-logo {
+      width: min(430px, 78vw);
+      max-height: 56vh;
+      object-fit: contain;
+      filter: drop-shadow(0 30px 75px rgba(255, 255, 255, 0.12));
+      transition: transform 0.35s ease, opacity 0.35s ease;
+    }
+
+    .enter-button:hover .enter-logo {
+      transform: scale(1.025);
+      opacity: 0.92;
+    }
+
+    .enter-text {
+      color: #f3eee8;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      text-shadow: 0 0 28px rgba(255, 255, 255, 0.28);
+    }
+
     .page-shell {
       width: min(1180px, calc(100% - 36px));
       margin: 0 auto;
@@ -765,6 +824,10 @@
         grid-template-columns: 1fr;
       }
 
+      .enter-text {
+        letter-spacing: 5px;
+      }
+
       .stats {
         grid-template-columns: 1fr;
       }
@@ -781,7 +844,14 @@
     }
   </style>
 </head>
-<body>
+<body class="is-locked">
+  <div class="enter-screen" id="enter-screen">
+    <button class="enter-button" type="button" id="enter-button" aria-label="Entrar a VANTA">
+      <img class="enter-logo" src="{{ url_for('static', filename='logo.jpeg') }}" alt="VANTA" />
+      <span class="enter-text">Enter</span>
+    </button>
+  </div>
+
   <header>
     <div class="page-shell topbar">
       <a class="brand" href="#home" aria-label="Ir al inicio">
@@ -792,7 +862,6 @@
         <a href="#drop">Drop</a>
         <a href="#about">Marca</a>
         <a href="#shop">Tienda</a>
-        <a href="/admin">Admin</a>
         <button class="cart-icon" type="button" onclick="toggleCart()">Carrito <span id="cart-count">0</span></button>
       </nav>
     </div>
@@ -1130,6 +1199,19 @@
         toggleCart(false);
       }
     });
+
+    function enterSite() {
+      const enterScreen = document.getElementById("enter-screen");
+      document.getElementById("enter-button").blur();
+      enterScreen.classList.add("is-hidden");
+      document.body.classList.remove("is-locked");
+
+      window.setTimeout(() => {
+        enterScreen.style.display = "none";
+      }, 750);
+    }
+
+    document.getElementById("enter-button").addEventListener("click", enterSite);
 
     updateCart();
   </script>
