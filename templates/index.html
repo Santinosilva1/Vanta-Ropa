@@ -592,6 +592,7 @@
       aspect-ratio: 4 / 5;
       overflow: hidden;
       background: #111;
+      cursor: pointer;
     }
 
     .product-media img {
@@ -603,6 +604,30 @@
 
     .product-card:hover .product-media img {
       transform: scale(1.045);
+    }
+
+    .product-media::after {
+      content: "Ver detalle";
+      position: absolute;
+      right: 14px;
+      bottom: 14px;
+      padding: 8px 11px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(5, 5, 5, 0.72);
+      color: var(--text);
+      font-size: 11px;
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .product-media:hover::after,
+    .product-media:focus-visible::after {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .badge {
@@ -694,6 +719,100 @@
     .cart-backdrop.active {
       opacity: 1;
       pointer-events: auto;
+    }
+
+    .detail-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 230;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.72);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      backdrop-filter: blur(12px);
+    }
+
+    .detail-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .detail-modal {
+      width: min(940px, 100%);
+      max-height: min(760px, calc(100vh - 40px));
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(300px, 1fr);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #080808;
+      box-shadow: var(--shadow);
+    }
+
+    .detail-image {
+      min-height: 520px;
+      background: #101010;
+    }
+
+    .detail-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .detail-content {
+      padding: clamp(22px, 4vw, 34px);
+      overflow-y: auto;
+    }
+
+    .detail-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .detail-top h3 {
+      font-size: clamp(26px, 4vw, 44px);
+      line-height: 0.98;
+      text-transform: uppercase;
+    }
+
+    .detail-price {
+      margin: 12px 0 18px;
+      color: var(--warm);
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .detail-content p {
+      color: #d4cec5;
+      line-height: 1.75;
+    }
+
+    .detail-list {
+      display: grid;
+      gap: 10px;
+      margin: 22px 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .detail-list li {
+      padding: 12px;
+      border: 1px solid var(--soft-line);
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.03);
+      line-height: 1.45;
+    }
+
+    .detail-actions {
+      display: grid;
+      gap: 10px;
     }
 
     .cart-panel {
@@ -1005,6 +1124,36 @@
         aspect-ratio: 5 / 6;
       }
 
+      .product-media::after {
+        opacity: 1;
+        transform: none;
+        right: 12px;
+        bottom: 12px;
+      }
+
+      .detail-backdrop {
+        padding: 14px;
+        align-items: end;
+      }
+
+      .detail-modal {
+        max-height: calc(100svh - 28px);
+        grid-template-columns: 1fr;
+      }
+
+      .detail-image {
+        min-height: 250px;
+        max-height: 38svh;
+      }
+
+      .detail-content {
+        padding: 20px;
+      }
+
+      .detail-top h3 {
+        font-size: clamp(25px, 9vw, 36px);
+      }
+
       .btn,
       .outline-btn,
       .cart-btn,
@@ -1116,7 +1265,7 @@
 <body class="is-locked">
   <div class="enter-screen" id="enter-screen">
     <button class="enter-button" type="button" id="enter-button" aria-label="Entrar a VANTA">
-      <img class="enter-logo" src="{{ url_for('static', filename='logo-enter.jpeg') }}" alt="VANTA" />
+      <img class="enter-logo" src="{{ url_for('static', filename='logo-enter-hd.png') }}" alt="VANTA" />
       <span class="enter-text">Enter</span>
     </button>
   </div>
@@ -1228,7 +1377,7 @@
 
         <div class="products">
           <article class="product-card">
-            <div class="product-media">
+            <div class="product-media" role="button" tabindex="0" onclick="openProductDetail('tee')" onkeydown="handleProductKey(event, 'tee')" aria-label="Ver detalle de VANTA Essential Tee">
               <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85" alt="Remera negra VANTA Essential Tee" />
               <span class="badge">Oversized</span>
             </div>
@@ -1250,7 +1399,7 @@
           </article>
 
           <article class="product-card">
-            <div class="product-media">
+            <div class="product-media" role="button" tabindex="0" onclick="openProductDetail('hoodie')" onkeydown="handleProductKey(event, 'hoodie')" aria-label="Ver detalle de VANTA Heavy Hoodie">
               <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=85" alt="Buzo negro VANTA Heavy Hoodie" />
               <span class="badge">Limitado</span>
             </div>
@@ -1271,7 +1420,7 @@
           </article>
 
           <article class="product-card">
-            <div class="product-media">
+            <div class="product-media" role="button" tabindex="0" onclick="openProductDetail('cap')" onkeydown="handleProductKey(event, 'cap')" aria-label="Ver detalle de VANTA Signature Cap">
               <img src="https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=900&q=85" alt="Gorra negra VANTA Signature Cap" />
               <span class="badge">Signature</span>
             </div>
@@ -1294,6 +1443,30 @@
   </main>
 
   <div class="cart-backdrop" id="cart-backdrop" onclick="toggleCart(false)"></div>
+
+  <div class="detail-backdrop" id="detail-backdrop" onclick="closeProductDetail(event)">
+    <article class="detail-modal" role="dialog" aria-modal="true" aria-labelledby="detail-title">
+      <div class="detail-image">
+        <img id="detail-image" src="" alt="" />
+      </div>
+      <div class="detail-content">
+        <div class="detail-top">
+          <div>
+            <p class="kicker" id="detail-kicker"></p>
+            <h3 id="detail-title"></h3>
+          </div>
+          <button class="small-btn" type="button" onclick="closeProductDetail()" aria-label="Cerrar detalle">X</button>
+        </div>
+        <div class="detail-price" id="detail-price"></div>
+        <p id="detail-description"></p>
+        <ul class="detail-list" id="detail-list"></ul>
+        <div class="detail-actions">
+          <button class="checkout-btn" type="button" id="detail-add-btn">Agregar al carrito</button>
+          <button class="cart-btn" type="button" onclick="closeProductDetail()">Seguir viendo</button>
+        </div>
+      </div>
+    </article>
+  </div>
 
   <aside class="cart-panel" id="cart-panel" aria-label="Carrito de compras">
     <div class="cart-header">
@@ -1327,6 +1500,49 @@
 
   <script>
     let cart = [];
+    let selectedProductKey = "";
+
+    const productsData = {
+      tee: {
+        name: "VANTA Essential Tee",
+        price: 39999,
+        sizeSelectId: "size-tee",
+        kicker: "Oversized - 280gsm",
+        image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1100&q=90",
+        description: "Remera de calce oversized con algodon pesado, pensada para caer firme sobre el cuerpo sin perder comodidad. Es la pieza base del drop: limpia, oscura y facil de combinar.",
+        details: [
+          "Algodon pesado 280gsm con tacto premium.",
+          "Fit amplio, hombro caido y largo equilibrado.",
+          "Ideal para usar sola o debajo de hoodie/campera."
+        ]
+      },
+      hoodie: {
+        name: "VANTA Heavy Hoodie",
+        price: 74999,
+        sizeSelectId: "size-hoodie",
+        kicker: "Heavyweight - limitado",
+        image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1100&q=90",
+        description: "Buzo pesado con presencia fuerte, capucha estructurada y fit amplio. Esta pensado para sentirse abrigado, premium y con una silueta limpia.",
+        details: [
+          "Interior suave y exterior con buena estructura.",
+          "Capucha con volumen y caida oversized.",
+          "Edicion limitada del Drop 001."
+        ]
+      },
+      cap: {
+        name: "VANTA Signature Cap",
+        price: 24999,
+        sizeSelectId: "size-cap",
+        kicker: "Signature - talle unico",
+        image: "https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=1100&q=90",
+        description: "Gorra negra signature con bordado frontal y ajuste regulable. Un accesorio simple, oscuro y directo para cerrar el outfit VANTA.",
+        details: [
+          "Bordado frontal con estetica minimal.",
+          "Visera curva y ajuste posterior regulable.",
+          "Talle unico adaptable."
+        ]
+      }
+    };
 
     function formatPrice(price) {
       return Number(price).toLocaleString("es-AR");
@@ -1411,6 +1627,47 @@
       updateCart();
     }
 
+    function handleProductKey(event, productKey) {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openProductDetail(productKey);
+      }
+    }
+
+    function openProductDetail(productKey) {
+      const product = productsData[productKey];
+      if (!product) return;
+
+      selectedProductKey = productKey;
+      document.getElementById("detail-image").src = product.image;
+      document.getElementById("detail-image").alt = product.name;
+      document.getElementById("detail-kicker").textContent = product.kicker;
+      document.getElementById("detail-title").textContent = product.name;
+      document.getElementById("detail-price").textContent = "$" + formatPrice(product.price);
+      document.getElementById("detail-description").textContent = product.description;
+      document.getElementById("detail-list").innerHTML = product.details.map(detail => `<li>${detail}</li>`).join("");
+      document.getElementById("detail-backdrop").classList.add("active");
+      document.body.classList.add("is-locked");
+    }
+
+    function closeProductDetail(event) {
+      if (event && !event.target.classList.contains("detail-backdrop")) {
+        return;
+      }
+
+      document.getElementById("detail-backdrop").classList.remove("active");
+      document.body.classList.remove("is-locked");
+    }
+
+    function addSelectedProductFromDetail() {
+      const product = productsData[selectedProductKey];
+      if (!product) return;
+
+      const size = document.getElementById(product.sizeSelectId).value;
+      closeProductDetail();
+      addToCart(product.name, product.price, size);
+    }
+
     async function checkout() {
       const name = document.getElementById("customer-name").value.trim();
       const phone = document.getElementById("customer-phone").value.trim();
@@ -1466,6 +1723,7 @@
     document.addEventListener("keydown", event => {
       if (event.key === "Escape") {
         toggleCart(false);
+        closeProductDetail();
       }
     });
 
@@ -1481,6 +1739,7 @@
     }
 
     document.getElementById("enter-button").addEventListener("click", enterSite);
+    document.getElementById("detail-add-btn").addEventListener("click", addSelectedProductFromDetail);
 
     updateCart();
   </script>
