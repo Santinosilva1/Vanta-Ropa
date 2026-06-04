@@ -150,6 +150,20 @@
       font-weight: 900;
     }
 
+    .payment-status {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      margin-top: 8px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      color: var(--warm);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
     .customer {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -246,6 +260,7 @@
             <div>
               <h3>Pedido #${order.id}</h3>
               <p class="muted">${order.created_at}</p>
+              <span class="payment-status">Pago: ${formatPaymentStatus(order.payment_status)}</span>
             </div>
             <div class="total">$${formatPrice(order.total)}</div>
           </div>
@@ -261,6 +276,19 @@
           </ul>
         </article>
       `).join("");
+    }
+
+    function formatPaymentStatus(status) {
+      const labels = {
+        approved: "aprobado",
+        pending: "pendiente",
+        in_process: "en proceso",
+        rejected: "rechazado",
+        cancelled: "cancelado",
+        manual: "manual"
+      };
+
+      return labels[status] || status || "sin estado";
     }
 
     loadOrders();

@@ -1841,7 +1841,7 @@
       }
 
       try {
-        const response = await fetch("/api/orders", {
+        const response = await fetch("/api/checkout", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -1853,16 +1853,14 @@
         const result = await response.json();
 
         if (!response.ok) {
-          showNotification(result.error || "No se pudo guardar el pedido.");
+          showNotification(result.error || "No se pudo iniciar el pago.");
           return;
         }
 
-        showNotification("Pedido #" + result.order_id + " guardado por $" + formatPrice(result.total) + ".");
-        cart = [];
-        updateCart();
-        toggleCart(false);
+        showNotification("Redirigiendo a Mercado Pago...");
+        window.location.href = result.init_point || result.sandbox_init_point;
       } catch (error) {
-        showNotification("No se pudo conectar con la tienda. Intenta de nuevo.");
+        showNotification("No se pudo conectar con Mercado Pago. Intenta de nuevo.");
       }
     }
 
