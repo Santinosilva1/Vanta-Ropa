@@ -744,6 +744,7 @@
 
     .detail-modal {
       width: min(980px, 100%);
+      height: min(820px, calc(100vh - 40px));
       max-height: min(820px, calc(100vh - 40px));
       display: grid;
       grid-template-columns: minmax(0, 0.88fr) minmax(320px, 1fr);
@@ -754,7 +755,8 @@
     }
 
     .detail-image {
-      min-height: 520px;
+      min-height: 0;
+      height: 100%;
       background: #101010;
     }
 
@@ -766,8 +768,10 @@
     }
 
     .detail-content {
+      min-height: 0;
       padding: clamp(22px, 4vw, 34px);
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .detail-breadcrumb {
@@ -1228,6 +1232,7 @@
       }
 
       .detail-modal {
+        height: auto;
         max-height: none;
         grid-template-columns: 1fr;
         overflow: visible;
