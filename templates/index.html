@@ -733,6 +733,8 @@
       pointer-events: none;
       transition: opacity 0.25s ease;
       backdrop-filter: blur(12px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .detail-backdrop.active {
@@ -1222,12 +1224,14 @@
 
       .detail-backdrop {
         padding: 14px;
-        align-items: end;
+        align-items: start;
       }
 
       .detail-modal {
-        max-height: calc(100svh - 28px);
+        max-height: none;
         grid-template-columns: 1fr;
+        overflow: visible;
+        margin: 0 0 14px;
       }
 
       .detail-image {
@@ -1237,6 +1241,7 @@
 
       .detail-content {
         padding: 20px;
+        overflow: visible;
       }
 
       .detail-top h3 {
@@ -1254,6 +1259,16 @@
 
       .detail-form {
         gap: 14px;
+      }
+
+      .detail-actions {
+        position: sticky;
+        bottom: 0;
+        z-index: 2;
+        margin: 0 -20px;
+        padding: 14px 20px 16px;
+        background: linear-gradient(180deg, rgba(8, 8, 8, 0.72), #080808 38%);
+        border-top: 1px solid var(--soft-line);
       }
 
       .btn,
