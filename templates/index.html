@@ -160,14 +160,15 @@
       inset: 0;
       z-index: -3;
       background:
-        radial-gradient(ellipse at 78% 42%, rgba(215, 196, 162, 0.14), transparent 30%),
-        linear-gradient(90deg, rgba(5, 5, 5, 0.98), rgba(5, 5, 5, 0.68) 48%, rgba(5, 5, 5, 0.94)),
-        linear-gradient(0deg, rgba(5, 5, 5, 0.98), transparent 52%, rgba(5, 5, 5, 0.78)),
+        radial-gradient(ellipse at 78% 40%, rgba(215, 196, 162, 0.3), transparent 34%),
+        radial-gradient(ellipse at 62% 74%, rgba(168, 216, 198, 0.12), transparent 30%),
+        linear-gradient(90deg, rgba(5, 5, 5, 0.96), rgba(5, 5, 5, 0.44) 50%, rgba(5, 5, 5, 0.7)),
+        linear-gradient(0deg, rgba(5, 5, 5, 0.9), transparent 58%, rgba(5, 5, 5, 0.5)),
         url("{{ url_for('static', filename='buzo-negro-tomacompleta.jpeg') }}");
-      background-size: auto, auto, auto, min(52vw, 620px) auto;
+      background-size: auto, auto, auto, auto, min(54vw, 660px) auto;
       background-repeat: no-repeat;
-      background-position: center, center, center, 78% 50%;
-      filter: saturate(0.82) contrast(1.1);
+      background-position: center, center, center, center, 78% 50%;
+      filter: saturate(1.02) contrast(1.12) brightness(1.18);
     }
 
     .hero::after {
@@ -176,8 +177,8 @@
       inset: 0;
       z-index: -2;
       background:
-        radial-gradient(ellipse at 60% 44%, rgba(215, 196, 162, 0.13), transparent 30%),
-        radial-gradient(ellipse at 82% 18%, rgba(255, 255, 255, 0.08), transparent 18%);
+        radial-gradient(ellipse at 64% 48%, rgba(215, 196, 162, 0.18), transparent 31%),
+        radial-gradient(ellipse at 84% 18%, rgba(255, 255, 255, 0.12), transparent 18%);
       mix-blend-mode: screen;
     }
 
@@ -806,8 +807,8 @@
       }
 
       .hero::before {
-        background-size: auto, auto, auto, min(76vw, 520px) auto;
-        background-position: center, center, center, 82% 58%;
+        background-size: auto, auto, auto, auto, min(76vw, 540px) auto;
+        background-position: center, center, center, center, 82% 58%;
       }
 
       .hero-grid {
@@ -864,8 +865,8 @@
       }
 
       .hero::before {
-        background-size: auto, auto, auto, 86vw auto;
-        background-position: center, center, center, 90% 72%;
+        background-size: auto, auto, auto, auto, 88vw auto;
+        background-position: center, center, center, center, 90% 72%;
       }
 
       .hero-grid {
