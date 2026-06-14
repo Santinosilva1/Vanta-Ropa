@@ -145,7 +145,7 @@
     }
 
     .hero {
-      min-height: calc(100vh - 74px);
+      min-height: min(760px, calc(100vh - 74px));
       position: relative;
       display: grid;
       align-items: end;
@@ -160,11 +160,11 @@
       inset: 0;
       z-index: -3;
       background:
-        linear-gradient(90deg, rgba(5, 5, 5, 0.94), rgba(5, 5, 5, 0.3) 44%, rgba(5, 5, 5, 0.72)),
-        linear-gradient(0deg, rgba(5, 5, 5, 0.96), transparent 42%, rgba(5, 5, 5, 0.3)),
+        linear-gradient(90deg, rgba(5, 5, 5, 0.96), rgba(5, 5, 5, 0.42) 46%, rgba(5, 5, 5, 0.72)),
+        linear-gradient(0deg, rgba(5, 5, 5, 0.95), transparent 48%, rgba(5, 5, 5, 0.36)),
         url("https://images.unsplash.com/photo-1520975954732-35dd22299614?auto=format&fit=crop&w=1800&q=88");
       background-size: cover;
-      background-position: center;
+      background-position: 66% 42%;
       filter: saturate(0.82) contrast(1.08);
     }
 
@@ -184,7 +184,7 @@
       grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
       gap: clamp(24px, 5vw, 70px);
       align-items: end;
-      padding: clamp(54px, 7vw, 92px) 0 42px;
+      padding: clamp(78px, 8vw, 118px) 0 58px;
     }
 
     .eyebrow {
@@ -197,7 +197,7 @@
 
     h1 {
       max-width: 860px;
-      font-size: clamp(64px, 11vw, 154px);
+      font-size: clamp(76px, 9vw, 132px);
       line-height: 0.83;
       letter-spacing: 0;
       text-transform: uppercase;
