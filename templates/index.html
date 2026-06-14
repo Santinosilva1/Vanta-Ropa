@@ -160,12 +160,14 @@
       inset: 0;
       z-index: -3;
       background:
-        linear-gradient(90deg, rgba(5, 5, 5, 0.96), rgba(5, 5, 5, 0.42) 46%, rgba(5, 5, 5, 0.72)),
-        linear-gradient(0deg, rgba(5, 5, 5, 0.95), transparent 48%, rgba(5, 5, 5, 0.36)),
-        url("https://images.unsplash.com/photo-1520975954732-35dd22299614?auto=format&fit=crop&w=1800&q=88");
-      background-size: cover;
-      background-position: 66% 42%;
-      filter: saturate(0.82) contrast(1.08);
+        radial-gradient(ellipse at 78% 42%, rgba(215, 196, 162, 0.14), transparent 30%),
+        linear-gradient(90deg, rgba(5, 5, 5, 0.98), rgba(5, 5, 5, 0.68) 48%, rgba(5, 5, 5, 0.94)),
+        linear-gradient(0deg, rgba(5, 5, 5, 0.98), transparent 52%, rgba(5, 5, 5, 0.78)),
+        url("{{ url_for('static', filename='buzo-negro-tomacompleta.jpeg') }}");
+      background-size: auto, auto, auto, min(52vw, 620px) auto;
+      background-repeat: no-repeat;
+      background-position: center, center, center, 78% 50%;
+      filter: saturate(0.82) contrast(1.1);
     }
 
     .hero::after {
@@ -803,6 +805,11 @@
         min-height: min(720px, calc(100vh - 96px));
       }
 
+      .hero::before {
+        background-size: auto, auto, auto, min(76vw, 520px) auto;
+        background-position: center, center, center, 82% 58%;
+      }
+
       .hero-grid {
         min-height: min(720px, calc(100vh - 96px));
         align-items: center;
@@ -854,6 +861,11 @@
 
       .hero {
         min-height: 560px;
+      }
+
+      .hero::before {
+        background-size: auto, auto, auto, 86vw auto;
+        background-position: center, center, center, 90% 72%;
       }
 
       .hero-grid {
