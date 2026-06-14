@@ -539,6 +539,27 @@
       color: #080808;
     }
 
+    .size-options button.is-disabled {
+      opacity: 0.36;
+      cursor: not-allowed;
+      text-decoration: line-through;
+    }
+
+    .stock-note,
+    .size-guide {
+      margin: -4px 0 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .size-guide {
+      margin-top: 0;
+      padding: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.035);
+    }
+
     .add-cart-btn,
     .continue-btn,
     .checkout-btn {
@@ -611,6 +632,31 @@
       color: var(--muted);
       font-size: 13px;
       line-height: 1.45;
+    }
+
+    .cart-item-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .cart-item-actions button {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .cart-item-actions strong {
+      min-width: 24px;
+      margin: 0;
+      text-align: center;
     }
 
     .cart-total {
@@ -1031,19 +1077,19 @@
         <div class="trust-strip">
           <div class="trust">
             <strong>WhatsApp</strong>
-            <p>Atencion directa para dudas, comprobantes y confirmacion de pedido.</p>
+            <p>Elegis tus prendas y el pedido se manda por WhatsApp con talle, cantidad y total.</p>
           </div>
           <div class="trust">
             <strong>Transferencia</strong>
-            <p>Pagas sin tarjeta. El pedido se confirma cuando envias el comprobante.</p>
+            <p>Pagas sin tarjeta. Te pasamos los datos, transferis y envias el comprobante.</p>
           </div>
           <div class="trust">
             <strong>Talles</strong>
-            <p>Guia provisoria y consulta por WhatsApp si dudas entre dos talles.</p>
+            <p>Fit oversized. Si dudas entre dos talles, consultanos antes de confirmar.</p>
           </div>
           <div class="trust">
             <strong>Instagram</strong>
-            <p><a href="https://www.instagram.com/vanta.designed?igsh=ZmV6ZWhiZWx2aDJi" target="_blank" rel="noopener">@vanta.designed</a> para novedades, drops y contenido de marca.</p>
+            <p><a href="https://www.instagram.com/vanta.designed?igsh=ZmV6ZWhiZWx2aDJi" target="_blank" rel="noopener">Ver drops en @vanta.designed</a> para novedades y contenido de marca.</p>
           </div>
         </div>
       </div>
@@ -1082,6 +1128,8 @@
         <ul class="detail-list" id="detailList"></ul>
         <label class="size-label">Elegir talle</label>
         <div class="size-options" id="sizeOptions"></div>
+        <p class="stock-note" id="stockNote"></p>
+        <p class="size-guide">Guia rapida: fit oversized. Si queres un calce normal, elegi tu talle habitual. Si queres mas suelto, subi un talle.</p>
         <button class="add-cart-btn" type="button" id="addToCart">Agregar al carrito</button>
       </div>
     </div>
@@ -1119,9 +1167,9 @@
         price: 39999,
         priceText: "$39.999",
         image: "{{ url_for('static', filename='Remera-azul.jpeg') }}",
-        description: "Remera de algodon con fit amplio, pensada para uso diario y presencia streetwear limpia.",
-        details: ["Material: algodon.", "Calce: oversized, hombro caido.", "Ideal para combinar con jeans, cargo o jogger."],
-        sizes: ["S", "M", "L", "XL"]
+        description: "Remera de algodon con fit amplio, caida firme y presencia limpia. Pensada para usar sola o como base de un outfit streetwear.",
+        details: ["Material: algodon suave y respirable.", "Calce: oversized, hombro caido y largo comodo.", "Cuidado: lavar del reves con agua fria para cuidar el color y el estampado."],
+        stock: { S: 2, M: 4, L: 3, XL: 1 }
       },
       hoodie: {
         name: "Buzo VANTA Negro",
@@ -1129,9 +1177,9 @@
         price: 74999,
         priceText: "$74.999",
         image: "{{ url_for('static', filename='buzo-negro-tomacompleta.jpeg') }}",
-        description: "Buzo negro de algodon con capucha, peso firme y estetica premium oscura.",
-        details: ["Material: algodon.", "Calce: relajado y pesado.", "Capucha amplia y terminaciones limpias."],
-        sizes: ["M", "L", "XL"]
+        description: "Buzo negro de algodon con capucha, peso firme y estetica premium oscura. Una prenda protagonista para dias frios o looks pesados.",
+        details: ["Material: algodon con cuerpo.", "Calce: relajado, pesado y comodo.", "Detalle: capucha amplia, terminaciones limpias y presencia VANTA."],
+        stock: { S: 0, M: 2, L: 3, XL: 1 }
       },
       detail: {
         name: "Detalle VANTA",
@@ -1139,9 +1187,9 @@
         price: 0,
         priceText: "Consultar",
         image: "{{ url_for('static', filename='Buzo-negro-toma-diseno.jpeg') }}",
-        description: "Vista de detalle para mostrar textura, diseno e identidad de la prenda.",
-        details: ["Referencia visual del drop.", "Sirve para ver mejor terminaciones y presencia.", "Consultanos por disponibilidad."],
-        sizes: ["M", "L", "XL"]
+        description: "Vista de detalle para mostrar textura, diseno e identidad de la prenda. Sirve como referencia visual del drop.",
+        details: ["Referencia visual del drop.", "Sirve para ver mejor terminaciones y presencia.", "Consultanos por disponibilidad antes de confirmar."],
+        stock: { M: 1, L: 1, XL: 0 }
       }
     };
 
@@ -1177,22 +1225,31 @@
 
     function renderSizes() {
       sizeOptions.innerHTML = "";
-      activeProduct.sizes.forEach((size) => {
+      Object.keys(activeProduct.stock).forEach((size) => {
+        const available = activeProduct.stock[size] > 0;
         const button = document.createElement("button");
         button.type = "button";
         button.textContent = size;
-        button.className = size === selectedSize ? "is-selected" : "";
+        button.disabled = !available;
+        button.className = `${size === selectedSize ? "is-selected" : ""} ${available ? "" : "is-disabled"}`.trim();
         button.addEventListener("click", () => {
+          if (!available) return;
           selectedSize = size;
           renderSizes();
         });
         sizeOptions.appendChild(button);
       });
+      const stock = activeProduct.stock[selectedSize] || 0;
+      document.getElementById("stockNote").textContent = stock > 1
+        ? `Disponible: ${stock} unidades en talle ${selectedSize}.`
+        : stock === 1
+          ? `Ultima unidad disponible en talle ${selectedSize}.`
+          : "Este talle no esta disponible.";
     }
 
     function openProduct(productKey) {
       activeProduct = products[productKey];
-      selectedSize = activeProduct.sizes[0];
+      selectedSize = Object.keys(activeProduct.stock).find((size) => activeProduct.stock[size] > 0) || Object.keys(activeProduct.stock)[0];
       document.getElementById("detailImage").src = activeProduct.image;
       document.getElementById("detailImage").alt = activeProduct.name;
       document.getElementById("detailKicker").textContent = activeProduct.kicker;
@@ -1205,8 +1262,9 @@
     }
 
     function renderCart() {
-      cartCount.textContent = cart.length;
-      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartCount.textContent = totalQuantity;
+      const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
       cartTotal.textContent = formatPrice(total);
 
       if (!cart.length) {
@@ -1221,12 +1279,18 @@
           <div>
             <strong>${item.name}</strong>
             <span>Talle: ${item.size}</span>
-            <span>Precio: ${formatPrice(item.price)}</span>
+            <span>Precio unitario: ${formatPrice(item.price)}</span>
+            <span>Subtotal: ${formatPrice(item.price * item.quantity)}</span>
+            <div class="cart-item-actions">
+              <button type="button" data-cart-action="decrease" data-cart-id="${item.id}" aria-label="Restar unidad">-</button>
+              <strong>${item.quantity}</strong>
+              <button type="button" data-cart-action="increase" data-cart-id="${item.id}" aria-label="Sumar unidad">+</button>
+            </div>
           </div>
         </div>
       `).join("");
 
-      const lines = cart.map((item) => `- ${item.name} / talle ${item.size} / ${formatPrice(item.price)}`).join("\n");
+      const lines = cart.map((item) => `- ${item.name} / talle ${item.size} / cantidad ${item.quantity} / subtotal ${formatPrice(item.price * item.quantity)}`).join("\n");
       const totalLine = `Total aproximado: ${formatPrice(total)}`;
       const message = `Hola VANTA! Quiero hacer este pedido:\n${lines}\n${totalLine}\nQuedo atento a los datos para transferir y enviar el comprobante.`;
       checkoutLink.href = `https://wa.me/5491136919127?text=${encodeURIComponent(message)}`;
@@ -1250,10 +1314,35 @@
     });
 
     document.getElementById("addToCart").addEventListener("click", () => {
-      cart.push({ ...activeProduct, size: selectedSize });
+      const availableStock = activeProduct.stock[selectedSize] || 0;
+      if (!availableStock) return;
+      const existing = cart.find((item) => item.name === activeProduct.name && item.size === selectedSize);
+      if (existing) {
+        existing.quantity = Math.min(existing.quantity + 1, availableStock);
+      } else {
+        cart.push({ ...activeProduct, id: `${activeProduct.name}-${selectedSize}`.replace(/\s+/g, "-"), size: selectedSize, quantity: 1 });
+      }
       renderCart();
       detailPanel.classList.remove("is-open");
       openOverlay(cartDrawer);
+    });
+
+    cartList.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-cart-action]");
+      if (!button) return;
+      const item = cart.find((cartItem) => cartItem.id === button.dataset.cartId);
+      if (!item) return;
+
+      if (button.dataset.cartAction === "increase") {
+        item.quantity = Math.min(item.quantity + 1, item.stock[item.size] || item.quantity);
+      } else {
+        item.quantity -= 1;
+        if (item.quantity <= 0) {
+          cart.splice(cart.indexOf(item), 1);
+        }
+      }
+
+      renderCart();
     });
 
     document.querySelector(".cart-icon").addEventListener("click", () => {
