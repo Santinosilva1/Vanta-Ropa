@@ -568,6 +568,91 @@
       letter-spacing: 1.4px;
     }
 
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .trust-item,
+    .process-step,
+    .fit-card {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.035);
+      padding: 20px;
+    }
+
+    .trust-item strong,
+    .process-step strong,
+    .fit-card strong {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--warm);
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .trust-item p,
+    .process-step p,
+    .fit-card p {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .process-step span {
+      width: 34px;
+      height: 34px;
+      display: inline-grid;
+      place-items: center;
+      margin-bottom: 18px;
+      border: 1px solid rgba(215, 196, 162, 0.45);
+      color: var(--warm);
+      font-weight: 900;
+    }
+
+    .fit-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .fit-card ul {
+      display: grid;
+      gap: 10px;
+      margin: 16px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .fit-card li {
+      padding: 12px;
+      border: 1px solid var(--soft-line);
+      color: #d4cec5;
+      line-height: 1.55;
+    }
+
+    .material-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .material-list span {
+      display: block;
+      padding: 12px;
+      border: 1px solid var(--soft-line);
+      color: #d4cec5;
+      line-height: 1.5;
+    }
+
     .products {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1013,6 +1098,13 @@
       margin-top: 10px;
     }
 
+    .checkout-note {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
     .checkout-btn {
       width: 100%;
       margin-top: 14px;
@@ -1083,7 +1175,10 @@
       }
 
       .dashboard,
-      .products {
+      .products,
+      .trust-grid,
+      .process-grid,
+      .fit-grid {
         grid-template-columns: 1fr;
       }
 
@@ -1502,17 +1597,105 @@
       </div>
     </section>
 
+    <section class="section" id="confianza">
+      <div class="page-shell">
+        <div class="section-head">
+          <h2>Compra segura</h2>
+          <p>VANTA trabaja con atencion directa por WhatsApp. El pedido se confirma manualmente cuando envias el comprobante de transferencia.</p>
+        </div>
+        <div class="trust-grid">
+          <div class="trust-item">
+            <strong>Atencion por WhatsApp</strong>
+            <p>Hablás con nosotros antes o despues de comprar para resolver dudas, confirmar stock y enviar comprobante.</p>
+          </div>
+          <div class="trust-item">
+            <strong>Pago por transferencia</strong>
+            <p>No hace falta ingresar tarjeta. Te pasamos los datos de pago y confirmamos el pedido al recibir el comprobante.</p>
+          </div>
+          <div class="trust-item">
+            <strong>Marca argentina</strong>
+            <p>Pedidos gestionados de forma directa para que la experiencia sea mas humana y transparente.</p>
+          </div>
+          <div class="trust-item">
+            <strong>Seguimiento manual</strong>
+            <p>El pedido queda registrado y se revisa desde el panel interno para preparar la entrega.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="como-comprar">
+      <div class="page-shell">
+        <div class="section-head">
+          <h2>Como comprar</h2>
+          <p>El proceso esta pensado para que sea simple: elegis, confirmas y mandas el comprobante por WhatsApp.</p>
+        </div>
+        <div class="process-grid">
+          <div class="process-step">
+            <span>1</span>
+            <strong>Elegis la prenda</strong>
+            <p>Selecciona talle y cantidad desde la ficha del producto o desde la tienda.</p>
+          </div>
+          <div class="process-step">
+            <span>2</span>
+            <strong>Finalizas el pedido</strong>
+            <p>Completas tus datos para que el pedido quede registrado en VANTA.</p>
+          </div>
+          <div class="process-step">
+            <span>3</span>
+            <strong>WhatsApp automatico</strong>
+            <p>Se abre un mensaje con el detalle del pedido para coordinar transferencia y envio.</p>
+          </div>
+          <div class="process-step">
+            <span>4</span>
+            <strong>Envias comprobante</strong>
+            <p>Cuando recibimos el comprobante, confirmamos el pago y preparamos tu compra.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="talles">
+      <div class="page-shell">
+        <div class="section-head">
+          <h2>Talles y material</h2>
+          <p>Hasta tener medidas exactas, dejamos una guia simple para orientar la eleccion. Si dudas, escribinos por WhatsApp.</p>
+        </div>
+        <div class="fit-grid">
+          <div class="fit-card">
+            <strong>Guia provisoria</strong>
+            <ul>
+              <li><b>S</b> - Calce mas al cuerpo, recomendado si buscas una silueta menos amplia.</li>
+              <li><b>M</b> - Calce regular/oversized moderado.</li>
+              <li><b>L</b> - Oversized marcado, con mas caida y comodidad.</li>
+              <li><b>XL</b> - Fit amplio, ideal si queres mucha presencia o usar capas abajo.</li>
+            </ul>
+          </div>
+          <div class="fit-card">
+            <strong>Material y cuidados</strong>
+            <p>Las prendas principales estan pensadas en algodon, con una sensacion pesada y premium.</p>
+            <div class="material-list">
+              <span>Material: algodon.</span>
+              <span>Lavar con agua fria y del reves para cuidar color y textura.</span>
+              <span>No usar lavandina. Secar a la sombra.</span>
+              <span>Si dudas entre dos talles, consultanos por WhatsApp antes de confirmar.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="shop">
       <div class="page-shell">
         <div class="section-head">
           <h2>Shop</h2>
-          <p>Selecciona talle y arma tu carrito. Al finalizar, el pedido queda registrado para seguimiento interno.</p>
+          <p>Selecciona talle y arma tu carrito. Al finalizar, el pedido queda registrado y se abre WhatsApp para enviar el comprobante.</p>
         </div>
 
         <div class="products">
           <article class="product-card">
             <div class="product-media" role="button" tabindex="0" onclick="openProductDetail('tee')" onkeydown="handleProductKey(event, 'tee')" aria-label="Ver detalle de VANTA Essential Tee">
-              <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85" alt="Remera negra VANTA Essential Tee" />
+              <img src="{{ url_for('static', filename='Remera-azul.jpeg') }}" alt="Remera VANTA Essential Tee" />
               <span class="badge">Oversized</span>
             </div>
             <div class="product-info">
@@ -1534,7 +1717,7 @@
 
           <article class="product-card">
             <div class="product-media" role="button" tabindex="0" onclick="openProductDetail('hoodie')" onkeydown="handleProductKey(event, 'hoodie')" aria-label="Ver detalle de VANTA Heavy Hoodie">
-              <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=85" alt="Buzo negro VANTA Heavy Hoodie" />
+              <img src="{{ url_for('static', filename='buzo-negro-tomacompleta.jpeg') }}" alt="Buzo negro VANTA Heavy Hoodie" />
               <span class="badge">Limitado</span>
             </div>
             <div class="product-info">
@@ -1638,7 +1821,8 @@
       <input id="customer-name" placeholder="Nombre" autocomplete="name" />
       <input id="customer-phone" placeholder="Telefono" autocomplete="tel" />
       <input id="customer-email" placeholder="Email opcional" autocomplete="email" />
-      <button class="checkout-btn" type="button" onclick="checkout()">Finalizar compra</button>
+      <p class="checkout-note">Al finalizar se abre WhatsApp con tu pedido. Ahi te pasamos los datos para transferir y nos mandas el comprobante.</p>
+      <button class="checkout-btn" type="button" onclick="checkout()">Finalizar por WhatsApp</button>
     </div>
   </aside>
 
@@ -1647,7 +1831,7 @@
   <footer>
     <div class="page-shell footer-inner">
       <span>&copy; 2026 VANTA. Presence Speaks.</span>
-      <span>Drop 001 - Buenos Aires</span>
+      <span>Instagram: proximamente | Atencion por WhatsApp</span>
     </div>
   </footer>
 
@@ -1673,12 +1857,13 @@
         sizeSelectId: "size-tee",
         sizes: ["S", "M", "L", "XL"],
         kicker: "Oversized - 280gsm",
-        image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1100&q=90",
-        description: "Remera de calce oversized con algodon pesado, pensada para caer firme sobre el cuerpo sin perder comodidad. Es la pieza base del drop: limpia, oscura y facil de combinar.",
+        image: "/static/Remera-azul.jpeg",
+        description: "Remera de calce oversized en algodon, pensada para caer firme sobre el cuerpo sin perder comodidad. Es la pieza base del drop: limpia, con presencia y facil de combinar.",
         details: [
-          "Algodon pesado 280gsm con tacto premium.",
+          "Material: algodon.",
           "Fit amplio, hombro caido y largo equilibrado.",
-          "Ideal para usar sola o debajo de hoodie/campera."
+          "Ideal para usar sola o debajo de hoodie/campera.",
+          "Cuidados: lavar con agua fria, del reves y secar a la sombra."
         ]
       },
       hoodie: {
@@ -1687,12 +1872,13 @@
         sizeSelectId: "size-hoodie",
         sizes: ["M", "L", "XL"],
         kicker: "Heavyweight - limitado",
-        image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1100&q=90",
-        description: "Buzo pesado con presencia fuerte, capucha estructurada y fit amplio. Esta pensado para sentirse abrigado, premium y con una silueta limpia.",
+        image: "/static/Buzo-negro-toma-diseno.jpeg",
+        description: "Buzo de algodon con presencia fuerte, capucha estructurada y fit amplio. Esta pensado para sentirse abrigado, premium y con una silueta limpia.",
         details: [
-          "Interior suave y exterior con buena estructura.",
+          "Material: algodon.",
           "Capucha con volumen y caida oversized.",
-          "Edicion limitada del Drop 001."
+          "Edicion limitada del Drop 001.",
+          "Cuidados: lavar con agua fria, del reves y no usar lavandina."
         ]
       },
       cap: {
